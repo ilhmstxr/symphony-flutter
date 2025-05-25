@@ -22,9 +22,6 @@ class IndexWisataState extends State<IndexWisata> {
 
     dbHelper.database.then((value) async {
       List<Map<String, dynamic>> maps = await dbHelper.getAllWisata();
-      if (maps.isEmpty) {
-        await insertDummyData(); // Masukkan data dummy jika belum ada data
-      }
       _loadWisata();
     });
     searchController.addListener(_onSearchChanged);

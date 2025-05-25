@@ -2,6 +2,7 @@ import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 import 'package:symphony_1/model/wisata.dart';
 import 'package:symphony_1/model/user.dart';
+import 'package:symphony_1/database/db_dummy.dart';
 
 class DatabaseHelper {
   static final DatabaseHelper _instance = DatabaseHelper._internal();
@@ -45,6 +46,8 @@ class DatabaseHelper {
       "gambar TEXT"
       ")",
     );
+
+    await insertDummyData(db);
   }
 
   Future<void> _onUpgrade(Database db, int oldVersion, int newVersion) async {

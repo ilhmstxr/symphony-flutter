@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:symphony_1/auth/register.dart';
 import 'package:symphony_1/utils/dialog_helper.dart';
 import 'package:symphony_1/database/db_helper.dart';
+import 'package:symphony_1/wisata/indexwisata.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -21,13 +22,8 @@ class _LoginPageState extends State<LoginPage> {
   void initState() {
     _passwordVisible = false;
     super.initState();
-    _initializeDatabase();
   }
 
-  void _initializeDatabase() async {
-    await dbhelper.database; // Hapus tanda kurung ()
-    // Tambahkan data dummy jika diperlukan
-  }
 
   @override
   void dispose() {
@@ -50,7 +46,7 @@ class _LoginPageState extends State<LoginPage> {
       Future.delayed(const Duration(seconds: 1), () {
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(builder: (context) => const RegisterPage()),
+          MaterialPageRoute(builder: (context) => IndexWisata()),
         );
       });
     }

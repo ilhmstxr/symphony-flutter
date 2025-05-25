@@ -1,7 +1,13 @@
 import 'package:flutter/material.dart';
 import 'auth/login.dart'; // Sesuaikan path sesuai struktur proyekmu
+import 'database/db_helper.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized(); // Penting untuk async di main
+
+  final dbHelper = DatabaseHelper();
+  await dbHelper.database; // Menunggu database siap
+
   runApp(const MyApp());
 }
 

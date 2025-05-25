@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:symphony_1/database/db_helper.dart';
-import 'package:symphony_1/database/db_dummy.dart'; // Impor file db_dummy.dart
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
@@ -20,14 +19,8 @@ class _RegisterPageState extends State<RegisterPage> {
   @override
   void initState() {
     super.initState();
-    _initializeDatabase();
   }
 
-  void _initializeDatabase() async {
-    await dbHelper.database; // Hapus tanda kurung ()
-    // Tambahkan data dummy jika diperlukan
-    await insertDummyData();
-  }
 
   @override
   void dispose() {
