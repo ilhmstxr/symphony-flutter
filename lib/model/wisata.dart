@@ -4,8 +4,10 @@ class Wisata {
   final String deskripsi;
   final String jamBuka;
   final String hariBuka;
-  final String gambar; // Tambahkan atribut gambar
-
+  final String gambar;
+  final String jenis_wisata;
+  final String kategori;
+  final String alamat;
   Wisata({
     required this.id,
     required this.judul,
@@ -13,6 +15,9 @@ class Wisata {
     required this.jamBuka,
     required this.hariBuka,
     required this.gambar,
+    required this.jenis_wisata,
+    required this.kategori,
+    required this.alamat,
   });
 
   // Konversi dari Map ke Wisata
@@ -24,6 +29,9 @@ class Wisata {
       jamBuka: map['jam_buka'],
       hariBuka: map['hari_buka'],
       gambar: map['gambar'],
+      jenis_wisata: map['jenis_wisata'],
+      kategori: map['kategori'],
+      alamat: map['alamat'],
     );
   }
 
@@ -36,6 +44,9 @@ class Wisata {
       'jam_buka': jamBuka,
       'hari_buka': hariBuka,
       'gambar': gambar,
+      'jenis_wisata': jenis_wisata,
+      'kategori': kategori,
+      'alamat': alamat,
     };
   }
 }

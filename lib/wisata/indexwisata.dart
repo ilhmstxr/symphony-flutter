@@ -3,6 +3,9 @@ import 'package:sqflite/sqflite.dart';
 import 'package:symphony_1/database/db_helper.dart';
 import 'package:symphony_1/database/db_dummy.dart';
 import 'package:symphony_1/model/wisata.dart';
+import 'package:symphony_1/wisata/detailwisata.dart';
+import 'package:symphony_1/wisata/placewisata.dart';
+import 'package:symphony_1/wisata/culinarywisata.dart';
 
 class IndexWisata extends StatefulWidget {
   @override
@@ -52,6 +55,30 @@ class IndexWisataState extends State<IndexWisata> {
         return Wisata.fromMap(maps[i]);
       });
     });
+  }
+
+  void placeWisata() {
+    final List<Wisata> nonCulinary = wisataList
+        .where((item) => item.kategori.toLowerCase() != 'kuliner')
+        .toList();
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => PlaceWisata(
+                  title: "Place Category",
+                  wisata: nonCulinary,
+                )));
+  }
+
+  void culinaryWisata() {
+    final List<Wisata> onlyCulinary = wisataList
+        .where((item) => item.kategori.toLowerCase() == 'kuliner')
+        .toList();
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) =>
+                PlaceWisata(title: "Culinary Category", wisata: onlyCulinary)));
   }
 
   @override
@@ -140,7 +167,7 @@ class IndexWisataState extends State<IndexWisata> {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () => placeWisata(),
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Color(0xFF4A90E2),
                       shape: RoundedRectangleBorder(
@@ -150,7 +177,7 @@ class IndexWisataState extends State<IndexWisata> {
                     child: Text('Place'),
                   ),
                   ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () => culinaryWisata(),
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Color(0xFF4A90E2),
                       shape: RoundedRectangleBorder(
@@ -173,15 +200,27 @@ class IndexWisataState extends State<IndexWisata> {
               // Grid View for Recommendations
               GridView.builder(
                 shrinkWrap: true,
-                physics: NeverScrollableScrollPhysics(),
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                physics: const NeverScrollableScrollPhysics(),
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
                   crossAxisSpacing: 16,
                   mainAxisSpacing: 16,
                 ),
                 itemCount: wisataList.length,
                 itemBuilder: (context, index) {
-                  return RecommendationCard(wisata: wisataList[index]);
+                  return InkWell(
+                    onTap: () {
+                      // Navigasi ke halaman detail
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) =>
+                              DetailWisata(wisata: wisataList[index]),
+                        ),
+                      );
+                    },
+                    child: RecommendationCard(wisata: wisataList[index]),
+                  );
                 },
               ),
             ],

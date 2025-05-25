@@ -2,11 +2,13 @@ class User {
   final int id;
   final String email;
   final String password;
+  final String birthday;
 
   User({
     required this.id,
     required this.email,
     required this.password,
+    required this.birthday
   });
 
   // Konversi dari Map ke User
@@ -15,6 +17,7 @@ class User {
       id: map['id'],
       email: map['email'],
       password: map['password'],
+      birthday: map['birthday'],
     );
   }
 
@@ -23,6 +26,7 @@ class User {
     return {
       'email': email,
       'password': password,
+      'tanggal_lahir': birthday,
     };
   }
 }

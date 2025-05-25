@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:symphony_1/database/db_helper.dart';
+import 'package:symphony_1/utils/dialog_helper.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
@@ -16,11 +17,13 @@ class _RegisterPageState extends State<RegisterPage> {
 
   final DatabaseHelper dbHelper = DatabaseHelper();
 
+  bool _passwordVisible = false;
+  bool _repasswordVisible = false;
+
   @override
   void initState() {
     super.initState();
   }
-
 
   @override
   void dispose() {
@@ -32,6 +35,7 @@ class _RegisterPageState extends State<RegisterPage> {
   }
 
   void _registerUser() async {
+    print("preesed");
     String email = _emailController.text.trim();
     String password = _passwordController.text.trim();
     String rePassword = _rePasswordController.text.trim();
@@ -42,31 +46,36 @@ class _RegisterPageState extends State<RegisterPage> {
         rePassword.isNotEmpty &&
         birthday.isNotEmpty) {
       if (password == rePassword) {
-        Map<String, dynamic> user = {
-          'email': email,
-          'password': password,
-        };
-
         try {
+          bool emailExists = await dbHelper.isEmailExists(email);
+          if (emailExists) {
+            DialogHelper.errorDialog(context, 'Email already exists');
+            return;
+          }
+          Map<String, dynamic> user = {
+            'email': email,
+            'password': password,
+            'tanggal_lahir': birthday
+          };
+
+          DialogHelper.successDialog(context, 'Registration successful');
+
           await dbHelper.insertUser(user);
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('Registration successful')),
-          );
-          Navigator.pop(context); // Kembali ke halaman login
+          // Kosongkan semua textfield
+          _emailController.clear();
+          _passwordController.clear();
+          _rePasswordController.clear();
+          _birthdayController.clear();
+
         } catch (e) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('Registration failed: $e')),
-          );
+          DialogHelper.errorDialog(context, 'Registration failed');
         }
       } else {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Passwords do not match')),
-        );
+        DialogHelper.errorDialog(
+            context, 'Password and re-password do not match');
       }
     } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Please fill in all fields')),
-      );
+      DialogHelper.errorDialog(context, 'Please fill in all fields');
     }
   }
 
@@ -85,7 +94,8 @@ class _RegisterPageState extends State<RegisterPage> {
                 child: IconButton(
                   icon: const Icon(Icons.arrow_back),
                   onPressed: () {
-                    Navigator.of(context).pop(); // Kembali ke halaman sebelumnya
+                    Navigator.of(context)
+                        .pop(); // Kembali ke halaman sebelumnya
                   },
                 ),
               ),
@@ -128,15 +138,41 @@ class _RegisterPageState extends State<RegisterPage> {
                     style: TextStyle(fontSize: 10, color: Colors.black),
                   ),
                   const SizedBox(height: 4),
-                  TextField(
-                    controller: _passwordController,
-                    obscureText: true,
-                    decoration: InputDecoration(
-                      hintText: "********",
-                      hintStyle: const TextStyle(fontSize: 10),
-                      border: OutlineInputBorder(),
-                    ),
-                    style: const TextStyle(fontSize: 10, color: Colors.black),
+                  Stack(
+                    alignment: Alignment.centerRight,
+                    children: [
+                      TextField(
+                        controller: _passwordController,
+                        obscureText: !_passwordVisible,
+                        decoration: InputDecoration(
+                          hintText: "********",
+                          hintStyle: const TextStyle(fontSize: 12),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(8),
+                            ),
+                          ),
+                        ),
+                        style: const TextStyle(
+                          fontSize: 12,
+                          color: Colors.black,
+                        ),
+                      ),
+                      IconButton(
+                        icon: Icon(
+                          _passwordVisible
+                              ? Icons.visibility_off
+                              : Icons.visibility,
+                          size: 20,
+                          color: Colors.grey,
+                        ),
+                        onPressed: () {
+                          setState(() {
+                            _passwordVisible = !_passwordVisible;
+                          });
+                        },
+                      ),
+                    ],
                   ),
                 ],
               ),
@@ -150,15 +186,41 @@ class _RegisterPageState extends State<RegisterPage> {
                     style: TextStyle(fontSize: 10, color: Colors.black),
                   ),
                   const SizedBox(height: 4),
-                  TextField(
-                    controller: _rePasswordController,
-                    obscureText: true,
-                    decoration: InputDecoration(
-                      hintText: "********",
-                      hintStyle: const TextStyle(fontSize: 10),
-                      border: OutlineInputBorder(),
-                    ),
-                    style: const TextStyle(fontSize: 10, color: Colors.black),
+                  Stack(
+                    alignment: Alignment.centerRight,
+                    children: [
+                      TextField(
+                        controller: _rePasswordController,
+                        obscureText: !_repasswordVisible,
+                        decoration: InputDecoration(
+                          hintText: "********",
+                          hintStyle: const TextStyle(fontSize: 12),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(8),
+                            ),
+                          ),
+                        ),
+                        style: const TextStyle(
+                          fontSize: 12,
+                          color: Colors.black,
+                        ),
+                      ),
+                      IconButton(
+                        icon: Icon(
+                          _repasswordVisible
+                              ? Icons.visibility_off
+                              : Icons.visibility,
+                          size: 20,
+                          color: Colors.grey,
+                        ),
+                        onPressed: () {
+                          setState(() {
+                            _repasswordVisible = !_repasswordVisible;
+                          });
+                        },
+                      ),
+                    ],
                   ),
                 ],
               ),

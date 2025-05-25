@@ -25,36 +25,37 @@ class DatabaseHelper {
       path,
       version: 2,
       onCreate: _onCreate,
-      onUpgrade: _onUpgrade,
     );
   }
+Future<void> _onCreate(Database db, int version) async {
+  // Tabel users dengan kolom tambahan: tanggal_lahir
+  await db.execute('''
+    CREATE TABLE users (
+      id INTEGER PRIMARY KEY,
+      email TEXT NOT NULL,
+      password TEXT NOT NULL,
+      tanggal_lahir TEXT
+    )
+  ''');
 
-  Future<void> _onCreate(Database db, int version) async {
-    // Tabel users
-    await db.execute(
-      "CREATE TABLE users(id INTEGER PRIMARY KEY, email TEXT, password TEXT)",
-    );
+  // Tabel wisata dengan kolom tambahan: jenis_wisata
+  await db.execute('''
+    CREATE TABLE wisata (
+      id INTEGER PRIMARY KEY,
+      judul TEXT NOT NULL,
+      deskripsi TEXT,
+      jam_buka TEXT,
+      hari_buka TEXT,
+      gambar TEXT,
+      jenis_wisata TEXT,
+      kategori TEXT,
+      alamat TEXT
+    )
+  ''');
 
-    // Tabel wisata
-    await db.execute(
-      "CREATE TABLE wisata("
-      "id INTEGER PRIMARY KEY,"
-      "judul TEXT,"
-      "deskripsi TEXT,"
-      "jam_buka TEXT,"
-      "hari_buka TEXT,"
-      "gambar TEXT"
-      ")",
-    );
+  await insertDummyData(db);
+}
 
-    await insertDummyData(db);
-  }
-
-  Future<void> _onUpgrade(Database db, int oldVersion, int newVersion) async {
-    if (oldVersion < 2) {
-      await db.execute("ALTER TABLE wisata ADD COLUMN gambar TEXT");
-    }
-  }
 
   // Tambah user / registrasi
   Future<int> insertUser(Map<String, dynamic> row) async {
@@ -169,6 +170,19 @@ class DatabaseHelper {
       rethrow;
     }
   }
+
+  // cek email 2
+  // db_helper.dart
+
+Future<bool> isEmailExists(String email) async {
+  Database db = await database;
+  List<Map<String, dynamic>> users = await db.query(
+    'users',
+    where: 'email = ?',
+    whereArgs: [email],
+  );
+  return users.isNotEmpty;
+}
 
   // Validasi user menggunakan email dan password
   Future<bool> validateUser(String email, String password) async {

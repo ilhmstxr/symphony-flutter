@@ -44,6 +44,7 @@ class _LoginPageState extends State<LoginPage> {
       DialogHelper.errorDialog(context, "Invalid email or password.");
     } else {
       Future.delayed(const Duration(seconds: 1), () {
+        DialogHelper.successDialog(context, "Login successful.");
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(builder: (context) => IndexWisata()),

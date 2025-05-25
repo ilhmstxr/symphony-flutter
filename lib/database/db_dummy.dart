@@ -1,7 +1,5 @@
 import 'package:sqflite/sqflite.dart';
-import 'package:symphony_1/database/db_helper.dart';
 
-// Fungsi untuk menambahkan data dummy saat aplikasi dijalankan
 Future<void> insertDummyData(Database db) async {
   // Dummy Users
   await db.insert(
@@ -29,7 +27,10 @@ Future<void> insertDummyData(Database db) async {
       'deskripsi': 'Explore the beauty of Kalimas with a boat tour.',
       'jam_buka': '09:00 - 17:00',
       'hari_buka': 'Everyday',
-      'gambar': 'https://source.unsplash.com/random/300x300/?beach ',
+      'gambar': 'https://picsum.photos/seed/100/600 ',
+      'jenis_wisata': 'tempat',
+      'kategori': 'destination',
+      'alamat': 'Jalan Kalimas Raya, Surabaya',
     },
   );
 
@@ -41,7 +42,10 @@ Future<void> insertDummyData(Database db) async {
       'deskripsi': 'Enjoy the night life at Surabaya North Quay.',
       'jam_buka': '18:00 - 23:00',
       'hari_buka': 'Everyday',
-      'gambar': 'https://source.unsplash.com/random/300x300/?city ',
+      'gambar': 'https://picsum.photos/seed/401/600 ',
+      'jenis_wisata': 'tempat',
+      'kategori': 'destination',
+      'alamat': 'Jalan Perak Timur, Surabaya',
     },
   );
 
@@ -53,7 +57,10 @@ Future<void> insertDummyData(Database db) async {
       'deskripsi': 'Discover the beauty of Mangrove Forest.',
       'jam_buka': '08:00 - 16:00',
       'hari_buka': 'Everyday',
-      'gambar': 'https://source.unsplash.com/random/300x300/?forest ',
+      'gambar': 'https://picsum.photos/seed/829/600 ',
+      'jenis_wisata': 'tempat',
+      'kategori': 'garden',
+      'alamat': 'Kenjeran, Surabaya',
     },
   );
 
@@ -65,7 +72,70 @@ Future<void> insertDummyData(Database db) async {
       'deskripsi': 'Visit the modern architecture house.',
       'jam_buka': '10:00 - 18:00',
       'hari_buka': 'Everyday',
-      'gambar': 'https://source.unsplash.com/random/300x300/?house ',
+      'gambar': 'https://picsum.photos/seed/300/600 ',
+      'jenis_wisata': 'tempat',
+      'kategori': 'museum',
+      'alamat': 'Rungkut, Surabaya',
+    },
+  );
+
+  await db.insert(
+    'wisata',
+    {
+      'id': 5,
+      'judul': 'Warung Soto Pak Mamat',
+      'deskripsi': 'Soto lezat dengan bumbu khas Surabaya.',
+      'jam_buka': '07:00 - 14:00',
+      'hari_buka': 'Everyday',
+      'gambar': 'https://picsum.photos/seed/101/600 ',
+      'jenis_wisata': 'kuliner',
+      'kategori': 'kuliner',
+      'alamat': 'Jalan Kupang Jaya, Surabaya',
+    },
+  );
+
+  await db.insert(
+    'wisata',
+    {
+      'id': 6,
+      'judul': 'Bakso Kaki Lima',
+      'deskripsi': 'Bakso enak dan murah dari kaki lima terkenal.',
+      'jam_buka': '15:00 - 22:00',
+      'hari_buka': 'Everyday',
+      'gambar': 'https://picsum.photos/seed/102/600 ',
+      'jenis_wisata': 'kuliner',
+      'kategori': 'kuliner',
+      'alamat': 'Pasar Atom, Surabaya',
+    },
+  );
+
+  await db.insert(
+    'wisata',
+    {
+      'id': 7,
+      'judul': 'Nasi Uduk Mbok Berek',
+      'deskripsi': 'Nasi uduk dengan lauk lengkap dan harga terjangkau.',
+      'jam_buka': '08:00 - 19:00',
+      'hari_buka': 'Everyday',
+      'gambar': 'https://picsum.photos/seed/103/600 ',
+      'jenis_wisata': 'kuliner',
+      'kategori': 'kuliner',
+      'alamat': 'Jalan Embong Ploso, Surabaya',
+    },
+  );
+
+  await db.insert(
+    'wisata',
+    {
+      'id': 8,
+      'judul': 'Es Teh Manis Mang Oki',
+      'deskripsi': 'Minuman segar es teh manis yang legendaris.',
+      'jam_buka': '09:00 - 21:00',
+      'hari_buka': 'Everyday',
+      'gambar': 'https://picsum.photos/seed/104/600 ',
+      'jenis_wisata': 'kuliner',
+      'kategori': 'kuliner',
+      'alamat': 'Jalan HR Muhammad, Surabaya',
     },
   );
 
