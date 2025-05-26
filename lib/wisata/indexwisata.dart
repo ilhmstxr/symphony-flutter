@@ -256,15 +256,17 @@ class RecommendationCard extends StatelessWidget {
       children: [
         ClipRRect(
           borderRadius: BorderRadius.circular(10),
-          child: Image.network(
+          child: Image.asset(
             wisata.gambar,
-            height: 150,
+            height: 100,
             width: double.infinity,
             fit: BoxFit.cover,
           ),
         ),
+    
         SizedBox(height: 8),
         Text(wisata.judul, style: TextStyle(fontWeight: FontWeight.bold)),
+        
       ],
     );
   }

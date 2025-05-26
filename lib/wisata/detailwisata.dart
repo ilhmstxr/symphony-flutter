@@ -36,7 +36,7 @@ class DetailWisata extends StatelessWidget {
             // Gambar Utama
             ClipRRect(
               borderRadius: BorderRadius.circular(12),
-              child: Image.network(
+              child: Image.asset(
                 wisata.gambar,
                 height: 250,
                 width: double.infinity,
