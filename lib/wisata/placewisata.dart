@@ -1,9 +1,8 @@
-// File: place_wisata.dart
-
 import 'package:flutter/material.dart';
 import 'package:symphony_1/model/wisata.dart'; // Model Wisata
 import 'package:symphony_1/utils/header.dart'; // Header.dart
-import 'package:symphony_1/utils/cardFull.dart'; // PlaceCard.dart
+import 'package:symphony_1/utils/cardFull.dart';
+import 'package:symphony_1/wisata/detailwisata.dart'; // PlaceCard.dart
 
 class PlaceWisata extends StatefulWidget {
   final String title;
@@ -40,7 +39,8 @@ class _PlaceWisataState extends State<PlaceWisata> {
       filteredWisata = results;
     });
   }
-@override
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: ListView(
@@ -60,7 +60,21 @@ class _PlaceWisataState extends State<PlaceWisata> {
                   ),
                 ),
                 const SizedBox(height: 10),
-                ...entry.value.map((wisataItem) => PlaceCard(wisata: wisataItem)),
+                ...entry.value.map((wisataItem) {
+                  return InkWell(
+                    onTap: () {
+                      // Navigasi ke halaman detail
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) =>
+                              DetailWisata(wisata: wisataItem),
+                        ),
+                      );
+                    },
+                    child: PlaceCard(wisata: wisataItem),
+                  );
+                }),
               ],
             );
           }),
